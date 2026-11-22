@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MirRise - Pro Trading Vault</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #07090e;
+            color: #f3f4f6;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f293d;
+            border-radius: 4px;
+        }
+
+        /* Neon & Metallic Card Effects */
+        .gold-border-glow {
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.08);
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .neon-card-green {
+            background: linear-gradient(145deg, rgba(6, 78, 59, 0.3), rgba(15, 20, 34, 0.95));
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            box-shadow: inset 0 1px 0 rgba(16, 185, 129, 0.15);
+        }
+
+        .neon-card-blue {
+            background: linear-gradient(145deg, rgba(30, 58, 138, 0.3), rgba(15, 20, 34, 0.95));
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            box-shadow: inset 0 1px 0 rgba(59, 130, 246, 0.15);
+        }
+
+        .neon-card-gold {
+            background: linear-gradient(145deg, rgba(120, 53, 15, 0.3), rgba(15, 20, 34, 0.95));
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            box-shadow: inset 0 1px 0 rgba(245, 158, 11, 0.15);
+        }
+
+        .neon-card-red {
+            background: linear-gradient(145deg, rgba(136, 19, 55, 0.3), rgba(15, 20, 34, 0.95));
+            border: 1px solid rgba(244, 63, 94, 0.25);
+            box-shadow: inset 0 1px 0 rgba(244, 63, 94, 0.15);
+        }
+
+        /* Floating Center MR Button Glow */
+        .floating-mr-btn {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.5), 0 0 5px rgba(255, 255, 255, 0.8) inset;
+        }
+
+        /* Smooth Tab Transitions */
+        .tab-content {
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        /* Spiral Notebook Physical Book Style (Dark Matching Theme) */
+        .spiral-book {
+            background: linear-gradient(145deg, #111d32, #080f1e);
+            color: #e2e8f0;
+            border-radius: 16px;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(245, 158, 11, 0.02);
+            position: relative;
+            padding-left: 38px;
+            touch-action: pan-y;
+        }
+
+        .spiral-rings {
+            position: absolute;
+            left: 8px;
+            top: 20px;
+            bottom: 20px;
+            width: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .spiral-ring {
+            width: 18px;
+            height: 10px;
+            background: linear-gradient(135deg, #f59e0b 0%, #b45309 50%, #78350f 100%);
+            border-radius: 6px;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .book-table th {
+            background: linear-gradient(135deg, #263957, #101a2d);
+            color: #ffda65;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 5px 6px;
+            border: 1px solid #1e293b;
+            text-align: center;
+        }
+
+        .book-table td {
+            border: 1px solid #1e293b;
+            padding: 5px 6px;
+            font-size: 11px;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .book-header-box {
+            background: linear-gradient(135deg, #263957, #101a2d);
+            color: #ffda65;
+            font-weight: 800;
+            font-size: 11px;
+            padding: 4px 10px;
+            text-align: center;
+            border: 1px solid #1e293b;
+        }
+    </style>
+
+<style id="mirrise-reference-redesign">
+:root{--mr-gold:#ffc928;--mr-gold2:#ff9f0a;--mr-emerald:#00e6a0}
+body{background:radial-gradient(ellipse at 50% -15%,#172444 0%,#050a17 44%,#02040a 100%)!important;color:#f5f7ff}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.13;background-image:linear-gradient(#ffffff09 1px,transparent 1px),linear-gradient(90deg,#ffffff09 1px,transparent 1px);background-size:34px 34px}
+body>.w-full{position:relative;z-index:1;background:linear-gradient(180deg,#080f20,#050916)!important;border-color:#ffc9282e!important;box-shadow:0 0 70px #000,0 0 32px #e7a91b12!important}
+.mirrise-header{background:linear-gradient(110deg,#050a18f5,#0c152af5,#050a18f5);border-bottom:1px solid #ffc92855;box-shadow:0 8px 28px #0008;gap:8px}
+.brand-lockup{min-width:0}.brand-mark{width:49px;height:49px;flex:none;border-radius:16px;position:relative;display:grid;place-items:center;background:linear-gradient(145deg,#fff1a6,#e9a900 48%,#885000);box-shadow:0 0 22px #e9a90070,inset 0 2px 5px #fff9;color:#080d18;font-size:17px;font-weight:1000;font-style:italic;transform:skew(-5deg)}
+.brand-mark i{position:absolute;right:-7px;top:-9px;color:#00e6a0;font-size:17px;filter:drop-shadow(0 0 7px #00e6a0)}
+.brand-copy h1{font-size:clamp(21px,6vw,27px);line-height:1;font-weight:950;letter-spacing:-1.4px;color:#f8fbff;font-style:italic;text-shadow:0 2px 12px #fff3}
+.brand-copy h1 span{background:linear-gradient(100deg,#fff2a8,#ffc928 48%,#ff8c00);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand-subtitle{font-size:8px;color:#e9edf8;letter-spacing:1.1px;font-weight:800;margin-top:6px;white-space:nowrap}
+.header-actions{display:flex;align-items:center;gap:7px}.vault-pill{display:flex;align-items:center;gap:6px;border:1px solid #00d99a88;border-radius:30px;padding:8px 10px;color:#00efae;background:#03241e88;font-size:10px;font-weight:800;box-shadow:0 0 14px #00d99a20;white-space:nowrap}.vault-pill i{font-size:15px}.vault-lock{width:39px;height:39px;border:1px solid #8da8e866;border-radius:13px;display:grid;place-items:center;color:#dce8ff;background:linear-gradient(145deg,#17284c,#080f20);box-shadow:inset 0 1px 5px #fff2,0 0 14px #507dff25}
+main{padding:15px!important}
+.hero-premium{min-height:218px;background:radial-gradient(ellipse at 78% 56%,#1a351e 0%,#101c2b 33%,#071020 68%,#030814 100%);border:1px solid #dcae35!important;box-shadow:0 0 0 1px #f9d87522,inset 0 0 36px #f2b51a0d,0 12px 32px #0009!important;padding:22px 18px!important}
+.hero-premium:after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,transparent,#ffc928,#fff0a0,#e58b00,transparent);box-shadow:0 0 17px #ffc928}
+.hero-premium .relative.z-10{max-width:76%!important}.hero-premium h2{font-size:clamp(22px,6vw,29px)!important;line-height:1.16!important;text-shadow:0 3px 18px #000}.hero-premium h2 span{color:#ffcf3e}.hero-premium p{font-size:12px!important;max-width:250px;text-shadow:0 2px 8px #000}
+.hero-bull{position:absolute;z-index:2;right:5px;bottom:8px;font-size:91px;line-height:1;filter:sepia(1) saturate(4) hue-rotate(355deg) drop-shadow(0 0 9px #ffb300) drop-shadow(0 8px 10px #000);transform:scaleX(-1) rotate(-5deg);opacity:.96;animation:bullFloat 4s ease-in-out infinite}
+.hero-candles{position:absolute;right:25%;bottom:30px;height:125px;display:flex;align-items:flex-end;gap:7px;opacity:.55;z-index:1}.hero-candles i{display:block;width:7px;height:var(--h,40px);background:linear-gradient(#00ed9b,#008b61);position:relative;box-shadow:0 0 9px #00df91}.hero-candles i:before{content:"";position:absolute;left:3px;top:-13px;height:calc(var(--h,40px) + 26px);width:1px;background:#00e69a}
+.hero-candles i:nth-child(2){--h:56px}.hero-candles i:nth-child(3){--h:43px;background:#ef5151}.hero-candles i:nth-child(4){--h:72px}.hero-candles i:nth-child(5){--h:62px}.hero-candles i:nth-child(6){--h:91px}.hero-candles i:nth-child(7){--h:105px}.hero-candles i:nth-child(8){--h:118px}
+@keyframes bullFloat{0%,100%{transform:scaleX(-1) translateY(0) rotate(-5deg)}50%{transform:scaleX(-1) translateY(-5px) rotate(-2deg)}}
+.gold-border-glow,.neon-card-green,.neon-card-blue,.neon-card-gold,.neon-card-red{border-radius:19px!important;box-shadow:inset 0 1px 0 #ffffff12,0 10px 25px #0005,0 0 16px #e7a91b0a!important}
+.neon-card-green{background:linear-gradient(145deg,#073d32,#0b1723 75%)!important;border-color:#00d99a66!important}.neon-card-blue{background:linear-gradient(145deg,#10284d,#0b1425 75%)!important;border-color:#5799ff55!important}.neon-card-gold{background:linear-gradient(145deg,#49320a,#151525 75%)!important;border-color:#ffc92866!important}.neon-card-red{background:linear-gradient(145deg,#431b2a,#151525 75%)!important;border-color:#ff526866!important}
+.neon-card-green>div:nth-child(2),.neon-card-blue>div:nth-child(2),.neon-card-gold>div:nth-child(2),.neon-card-red>div:nth-child(2){font-size:26px!important;text-shadow:0 0 14px currentColor}
+.bg-\[\#0f1422\]{background:linear-gradient(145deg,#111d32,#080f1e)!important;border-color:#344665!important;border-radius:19px!important}
+button{transition:filter .2s,transform .2s,box-shadow .2s}button:active{transform:scale(.97)}
+input,select,textarea{background:#081326!important;border-color:#465777!important;color:#f5f7ff!important;border-radius:11px!important}
+input:focus,select:focus,textarea:focus{border-color:#ffc928!important;box-shadow:0 0 0 3px #ffc92820!important;outline:none}
+nav.fixed{background:linear-gradient(180deg,#101c31f5,#050a16fa)!important;border-top:1px solid #d6a62f66!important;box-shadow:0 -9px 30px #000b,0 0 22px #e4a51b12!important;padding-bottom:max(10px,env(safe-area-inset-bottom))!important}
+.floating-mr-btn{border:2px solid #fff1a5!important;background:linear-gradient(145deg,#fff0a0,#ffc21c 45%,#c66c00)!important;box-shadow:0 0 0 5px #ffc92820,0 0 28px #ffc928aa,inset 0 2px 5px #fff!important}
+@media(max-width:390px){.mirrise-header{padding:12px!important}.brand-mark{width:42px;height:42px}.brand-copy h1{font-size:21px}.brand-subtitle{font-size:7px;letter-spacing:.7px}.vault-pill{padding:7px 8px;font-size:9px}.vault-lock{width:34px;height:34px}.hero-bull{font-size:75px;right:0}.hero-premium .relative.z-10{max-width:79%!important}.hero-premium{padding:17px!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style></head>
+<body class="flex justify-center min-h-screen bg-[#07090e]">
+
+    <!-- Main Mobile Shell Container -->
+    <div class="w-full max-w-md bg-[#090d16] flex flex-col justify-between min-h-screen relative border-x border-gray-800/60 shadow-2xl pb-24">
+        
+        <!-- Header Top Bar -->
+        <header class="mirrise-header px-5 py-4 sticky top-0 z-30 flex items-center justify-between">
+            <div class="brand-lockup flex items-center gap-3">
+                <div class="brand-mark"><span>MR</span><i class="fa-solid fa-arrow-trend-up"></i></div>
+                <div class="brand-copy"><h1>Mir<span>Rise</span></h1><div class="brand-subtitle">P R O&nbsp;&nbsp; T R A D I N G&nbsp;&nbsp; V A U L T</div></div>
+            </div>
+            <div class="header-actions"><span class="vault-pill"><i class="fa-solid fa-shield-halved"></i><span>Offline Vault</span></span><span class="vault-lock"><i class="fa-solid fa-lock"></i></span></div>
+        </header>
+
+        <!-- Main Content Scroll Area -->
+        <main class="p-4 flex-1">
+            
+            <!-- HOME TAB CONTENT -->
+            <div id="tab-home" class="tab-content space-y-4">
+                
+                <!-- Golden Candle Hero Banner -->
+                <div class="hero-premium relative overflow-hidden rounded-2xl gold-border-glow p-5" style="background: radial-gradient(circle at 75% 55%, rgba(255, 185, 30, 0.16), rgba(4, 7, 15, 0.96) 72%) !important;">
+                    <canvas id="heroBullCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+                    <div class="relative z-10 max-w-[72%]">
+                        <div class="inline-flex items-center gap-1.5 text-amber-400 font-extrabold text-[11px] uppercase tracking-wider mb-2">
+                            <i class="fa-solid fa-book-bookmark text-xs"></i> Trading Journal
+                        </div>
+                        <h2 class="text-lg font-bold text-white leading-snug tracking-tight">Better Trades Start With <span>Discipline.</span></h2>
+                        <p class="text-xs text-gray-400 mt-2 leading-relaxed">Track every trade. Control risk. Build consistency.</p>
+                    </div>
+                    <button onclick="switchTab('settings')" id="currencyBadgeBtn" class="absolute right-3.5 top-3.5 z-20 bg-gray-900/90 border border-amber-500/40 text-amber-300 font-bold text-xs px-3 py-1 rounded-lg shadow-md active:scale-95 transition-transform">
+                        INR (₹)
+                    </button>
+                </div>
+
+                <!-- Metric Cards Grid -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="p-4 rounded-2xl neon-card-green relative overflow-hidden">
+                        <div class="flex justify-between items-center text-xs text-emerald-400 font-semibold">
+                            <span>Net P&amp;L</span>
+                            <i class="fa-solid fa-chart-line text-sm"></i>
+                        </div>
+                        <div id="netPnlVal" class="text-2xl font-black text-emerald-400 mt-2 tracking-tight">₹0.00</div>
+                        <div class="text-[10px] text-gray-400 mt-1 font-medium">Includes Brokerage &amp; Tax</div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl neon-card-blue relative overflow-hidden">
+                        <div class="flex justify-between items-center text-xs text-blue-400 font-semibold">
+                            <span>Total Trades</span>
+                            <i class="fa-solid fa-layer-group text-sm"></i>
+                        </div>
+                        <div id="totalTradesVal" class="text-2xl font-black text-white mt-2 tracking-tight">0</div>
+                        <div id="winLossRatioVal" class="text-[10px] text-gray-400 mt-1 font-medium">0 Wins / 0 Losses</div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl neon-card-gold relative overflow-hidden">
+                        <div class="flex justify-between items-center text-xs text-amber-400 font-semibold">
+                            <span>Win Rate</span>
+                            <i class="fa-solid fa-bullseye text-sm"></i>
+                        </div>
+                        <div id="winRateVal" class="text-2xl font-black text-amber-400 mt-2 tracking-tight">0.0%</div>
+                        <div class="text-[10px] text-gray-400 mt-1 font-medium">Accuracy Ratio</div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl neon-card-red relative overflow-hidden">
+                        <div class="flex justify-between items-center text-xs text-rose-400 font-semibold">
+                            <span>Max Drawdown</span>
+                            <i class="fa-solid fa-arrow-trend-down text-sm"></i>
+                        </div>
+                        <div id="maxDdVal" class="text-2xl font-black text-rose-400 mt-2 tracking-tight">₹0.00</div>
+                        <div class="text-[10px] text-gray-400 mt-1 font-medium">Peak-to-Trough Risk</div>
+                    </div>
+                </div>
+
+                <!-- Recent Executions Feed -->
+                <div class="bg-[#0f1422] rounded-2xl p-4 border border-gray-800/80 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-sm font-bold text-gray-200 flex items-center gap-2">
+                            <i class="fa-regular fa-clock text-amber-400"></i> Recent Executions
+                        </h3>
+                        <button onclick="switchTab('analytics')" class="text-xs text-amber-400 font-bold hover:underline">View Book &gt;</button>
+                    </div>
+                    <div id="recentTradesList" class="space-y-2">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CHART TAB (INCLUDES DAILY CANDLE CHART + PERFORMANCE ANALYTICS & EQUITY CURVE) -->
+            <div id="tab-chart" class="tab-content hidden space-y-4">
+                <!-- Daily Candle Chart -->
+                <div class="bg-[#0f1422] rounded-2xl p-4 border border-gray-800/80">
+                    <div class="flex justify-between items-center mb-3">
+                        <div>
+                            <h3 class="text-base font-extrabold gold-gradient-text">Daily P&amp;L Candle Chart</h3>
+                            <p class="text-[11px] text-gray-400">Real OHLC Financial Candlesticks</p>
+                        </div>
+                        <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2.5 py-1 rounded-lg font-bold">1D View</span>
+                    </div>
+                    <div class="relative w-full h-64 bg-[#07090e] rounded-xl border border-gray-800 p-2 overflow-hidden flex items-center justify-center">
+                        <canvas id="dailyCandleCanvas" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- Performance Analytics inside Chart Tab -->
+                <div class="bg-[#0f1422] rounded-2xl p-4 border border-gray-800/80 space-y-4">
+                    <h3 class="text-base font-extrabold gold-gradient-text">Performance Analytics</h3>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-[#07090e] p-3 rounded-xl border border-gray-800">
+                            <span class="text-[11px] text-gray-400 block font-semibold">Gross Profit</span>
+                            <span id="grossProfitVal" class="text-base font-bold text-emerald-400">₹0.00</span>
+                        </div>
+                        <div class="bg-[#07090e] p-3 rounded-xl border border-gray-800">
+                            <span class="text-[11px] text-gray-400 block font-semibold">Gross Loss</span>
+                            <span id="grossLossVal" class="text-base font-bold text-rose-400">₹0.00</span>
+                        </div>
+                        <div class="bg-[#07090e] p-3 rounded-xl border border-gray-800">
+                            <span class="text-[11px] text-gray-400 block font-semibold">Total Taxes/Brokerage</span>
+                            <span id="totalTaxVal" class="text-base font-bold text-amber-400">₹0.00</span>
+                        </div>
+                        <div class="bg-[#07090e] p-3 rounded-xl border border-gray-800">
+                            <span class="text-[11px] text-gray-400 block font-semibold">Profit Factor</span>
+                            <span id="profitFactorVal" class="text-base font-bold text-blue-400">0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#07090e] p-4 rounded-xl border border-gray-800 space-y-2">
+                        <span class="text-xs text-gray-300 font-bold block">Cumulative Equity Curve</span>
+                        <canvas id="equityCurveCanvas" class="w-full h-36"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRADE BOOK / JOURNAL TAB (PHYSICAL SPIRAL NOTEBOOK) -->
+            <div id="tab-analytics" class="tab-content hidden space-y-3">
+                <!-- Page Navigation & Date Jump Controls -->
+                <div class="flex flex-col gap-2 bg-[#0f1422] p-2.5 rounded-2xl border border-gray-800">
+                    <div class="flex items-center justify-between">
+                        <button onclick="prevBookPage()" class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-amber-400 rounded-xl font-bold text-xs flex items-center gap-1 active:scale-95 transition-transform">
+                            <i class="fa-solid fa-chevron-left"></i> Prev Date
+                        </button>
+                        <div class="text-center">
+                            <span id="bookPageDateDisplay" class="text-xs font-black text-white block">2026-11-01</span>
+                            <span id="bookPageNumberDisplay" class="text-[10px] text-gray-400 font-semibold">Page 1 of 1</span>
+                        </div>
+                        <button onclick="nextBookPage()" class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-amber-400 rounded-xl font-bold text-xs flex items-center gap-1 active:scale-95 transition-transform">
+                            Next Date <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Direct Date Picker Jump -->
+                    <div class="flex items-center justify-center gap-2 pt-1 border-t border-gray-800/60">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1">
+                            <i class="fa-regular fa-calendar-days text-amber-400"></i> Go to Date:
+                        </span>
+                        <input type="date" id="bookDatePicker" onchange="jumpToBookDate(this.value)" class="bg-[#07090e] text-amber-300 font-bold text-xs px-2.5 py-1 rounded-lg border border-amber-500/30 outline-none cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- SPIRAL NOTEBOOK PHYSICAL TRADE BOOK PAGE WITH TOUCH/MOUSE SWIPE -->
+                <div id="spiralBookContainer" class="spiral-book p-4 relative text-gray-200 select-none cursor-grab active:cursor-grabbing transition-all duration-200 ease-out">
+                    <!-- Left Binder Spiral Rings -->
+                    <div class="spiral-rings">
+                        <div class="spiral-ring"></div>
+                        <div class="spiral-ring"></div>
+                        <div class="spiral-ring"></div>
+                        <div class="spiral-ring"></div>
+                        <div class="spiral-ring"></div>
+                        <div class="spiral-ring"></div>
+                        <div class="spiral-ring"></div>
+                        <div class="spiral-ring"></div>
+                        <div class="spiral-ring"></div>
+                        <div class="spiral-ring"></div>
+                    </div>
+
+                    <!-- Book Page Title -->
+                    <div class="text-center mb-2">
+                        <h2 class="text-xl font-black gold-gradient-text tracking-wider font-serif">TRADE BOOK</h2>
+                    </div>
+
+                    <!-- Header Date & Sentiment Details -->
+                    <div class="flex justify-between text-[11px] font-bold text-gray-300 border-b border-gray-800 pb-2 mb-2">
+                        <div>Date: <span id="pbDateVal" class="text-amber-400 underline font-semibold">--</span></div>
+                        <div>Day: <span id="pbDayVal" class="text-amber-400 underline font-semibold">--</span></div>
+                    </div>
+
+                    <div class="text-[10px] font-semibold text-gray-300 space-y-1 mb-2">
+                        <div>
+                            <span class="font-bold text-gray-400">Market Sentiment:</span> 
+                            <span id="pbSentimentVal" class="text-amber-400 font-bold ml-1">Bullish</span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                            <span>Mental State: <strong id="pbMentalVal" class="text-amber-300">8/10</strong></span>
+                            <span>Energy Level: <strong id="pbEnergyVal" class="text-amber-300">7/10</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Watchlist Header Section -->
+                    <div class="mb-2">
+                        <div class="book-header-box rounded-t-md">Watchlist</div>
+                        <div id="pbWatchlistVal" class="p-2 border border-gray-800 bg-[#07090e] text-[11px] text-gray-300 font-medium rounded-b-md min-h-[32px]">
+                            NIFTY 24500 CE, BANKNIFTY 52000 PE
+                        </div>
+                    </div>
+
+                    <!-- Account Summary Box -->
+                    <div class="grid grid-cols-2 text-[10px] border border-gray-800 bg-[#07090e] mb-2 rounded-md overflow-hidden">
+                        <div class="p-2 border-r border-b border-gray-800">
+                            Starting A/C: <strong id="pbStartBal" class="text-white">₹100,000</strong><br>
+                            Total Brokerage: <strong id="pbBrokerage" class="text-amber-400">₹80.00</strong>
+                        </div>
+                        <div class="p-2 border-b border-gray-800">
+                            Closing A/C: <strong id="pbCloseBal" class="text-white">₹102,250</strong><br>
+                            Closed P/L: <strong id="pbClosedPnl" class="text-emerald-400 font-bold">+₹2,250</strong>
+                        </div>
+                    </div>
+
+                    <!-- Trade Executions Grid Table -->
+                    <div class="overflow-x-auto mb-2">
+                        <table class="w-full book-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Buy</th>
+                                    <th>Sell</th>
+                                    <th>Qty</th>
+                                    <th>Target</th>
+                                    <th>SL</th>
+                                    <th>P/L</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pbTradeRows">
+                                <!-- Populated dynamically per page -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Mistakes & Violations Section -->
+                    <div class="mb-2">
+                        <div class="book-header-box rounded-t-md">Mistakes &amp; Violations</div>
+                        <div class="p-2 border border-gray-800 bg-[#07090e] rounded-b-md grid grid-cols-2 gap-1 text-[9.5px] font-medium text-gray-300">
+                            <label class="flex items-center gap-1.5"><input type="checkbox" id="m_posSize" class="accent-amber-500"> Exceeded Pos Size</label>
+                            <label class="flex items-center gap-1.5"><input type="checkbox" id="m_revenge" class="accent-amber-500"> Revenge Trade</label>
+                            <label class="flex items-center gap-1.5"><input type="checkbox" id="m_fomo" class="accent-amber-500"> FOMO Entry</label>
+                            <label class="flex items-center gap-1.5"><input type="checkbox" id="m_emotional" class="accent-amber-500"> Emotional Decision</label>
+                            <label class="flex items-center gap-1.5"><input type="checkbox" id="m_overtrade" class="accent-amber-500"> Overtrading</label>
+                            <label class="flex items-center gap-1.5"><input type="checkbox" id="m_sl" class="accent-amber-500"> Ignored SL</label>
+                        </div>
+                    </div>
+
+                    <!-- My Observation / Notes Section -->
+                    <div>
+                        <div class="book-header-box rounded-t-md">My Observation / Notes</div>
+                        <textarea id="pbNotesInput" onchange="saveBookPageNotes()" rows="2" placeholder="Write daily trading takeaways..." class="w-full p-2 border border-gray-800 bg-[#07090e] text-[11px] text-gray-200 rounded-b-md outline-none resize-none focus:border-amber-500/50"></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SETTINGS TAB -->
+            <div id="tab-settings" class="tab-content hidden space-y-4">
+                <div class="bg-[#0f1422] rounded-2xl p-4 border border-gray-800/80 space-y-4">
+                    <h3 class="text-base font-extrabold gold-gradient-text">Settings &amp; Playbook</h3>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-[#07090e] p-3 rounded-xl border border-gray-800 flex justify-between items-center">
+                            <div>
+                                <div class="text-xs font-bold text-gray-200">Trading Currency</div>
+                                <div class="text-[10px] text-gray-500">Applied to all P&amp;L calculations</div>
+                            </div>
+                            <select id="currencySelect" onchange="updateCurrency(this.value)" class="bg-gray-800 text-amber-400 font-bold text-xs px-3 py-1.5 rounded-lg border border-amber-500/30 outline-none">
+                                <option value="INR">INR (₹)</option>
+                                <option value="USD">USD ($)</option>
+                                <option value="EUR">EUR (€)</option>
+                            </select>
+                        </div>
+
+                        <div class="bg-[#07090e] p-3 rounded-xl border border-gray-800 flex justify-between items-center">
+                            <div>
+                                <div class="text-xs font-bold text-gray-200">Auto Taxes &amp; Brokerage</div>
+                                <div class="text-[10px] text-gray-500">Deduct standard tax/fees per order</div>
+                            </div>
+                            <input type="checkbox" id="autoTaxCheck" onchange="renderAll()" checked class="w-4 h-4 accent-amber-500 cursor-pointer">
+                        </div>
+                    </div>
+
+                    <div class="pt-2 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider">Trading Playbook</h4>
+                            <button type="button" onclick="addPlaybookSetup()" class="px-3 py-1.5 rounded-xl bg-[#07090e] hover:bg-amber-500/10 text-amber-300 border border-amber-500/40 font-bold text-xs flex items-center gap-1 active:scale-95 transition-all">
+                                + Add Setup
+                            </button>
+                        </div>
+                        <div id="addSetupBox" class="hidden bg-[#07090e] p-2.5 rounded-xl border border-amber-500/30 flex items-center gap-2">
+                            <input type="text" id="newSetupInput" placeholder="Enter new setup (e.g. Opening Range)" class="flex-1 bg-[#0d121f] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-amber-400">
+                            <button type="button" onclick="confirmAddSetup()" class="px-3 py-1.5 rounded-lg bg-amber-400 text-black font-extrabold text-xs">Save</button>
+                        </div>
+                        <div id="playbookList" class="space-y-2">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- SHARE APP SECTION -->
+                    <div class="pt-2 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-share-nodes"></i> Share MirRise App
+                            </h4>
+                            <span class="text-[10px] text-emerald-400 font-semibold">Invite Traders</span>
+                        </div>
+                        <div class="bg-[#07090e] p-3.5 rounded-xl border border-amber-500/30 space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <div>
+                                    <div class="text-xs font-bold text-white">MirRise – Pro Trading Vault</div>
+                                    <div class="text-[10px] text-gray-400">Share this trading journal app with friends</div>
+                                </div>
+                                <button type="button" onclick="shareAppLink()" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-black font-extrabold text-xs shadow-md shadow-amber-500/20 flex items-center gap-1.5 active:scale-95 transition-transform flex-none">
+                                    <i class="fa-solid fa-share-from-square"></i> Share App
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-2 bg-[#0d121f] px-2.5 py-2 rounded-lg border border-gray-800">
+                                <input type="text" id="appShareUrlInput" readonly class="bg-transparent border-none text-[11px] text-amber-300 font-medium w-full outline-none truncate p-0" value="">
+                                <button type="button" onclick="copyAppLink(this)" class="text-[10px] font-bold text-gray-200 bg-gray-800 hover:bg-gray-700 border border-gray-700 px-2.5 py-1 rounded-md flex items-center gap-1 flex-none">
+                                    <i class="fa-regular fa-copy"></i> Copy Link
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button type="button" onclick="shareToWhatsApp()" class="bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-700/50 text-[11px] font-bold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors">
+                                    <i class="fa-brands fa-whatsapp text-sm text-emerald-400"></i> WhatsApp
+                                </button>
+                                <button type="button" onclick="shareAppFile()" class="bg-blue-950/50 hover:bg-blue-900/60 text-blue-300 border border-blue-700/50 text-[11px] font-bold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors">
+                                    <i class="fa-solid fa-file-arrow-up text-xs text-blue-400"></i> Share App File
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RECOMMENDED BROKERS & PLATFORMS -->
+                    <div class="pt-2 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-link"></i> Trading Platforms &amp; Brokers
+                            </h4>
+                            <span class="text-[10px] text-gray-500 font-semibold">Partner Links</span>
+                        </div>
+                        <div class="space-y-2">
+                            <!-- Delta Exchange -->
+                            <a href="https://www.delta.exchange/?code=YXEJGF" target="_blank" rel="noopener noreferrer" class="bg-[#07090e] hover:bg-gray-900/90 p-3 rounded-xl border border-gray-800 hover:border-amber-500/40 flex justify-between items-center transition-all group">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-black text-xs">DE</div>
+                                    <div>
+                                        <div class="text-xs font-bold text-gray-200 group-hover:text-amber-300 transition-colors">Delta Exchange</div>
+                                        <div class="text-[10px] text-gray-500">Crypto F&amp;O Trading</div>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                                    Open <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                </span>
+                            </a>
+
+                            <!-- CoinDCX -->
+                            <a href="https://invite.coindcx.com/93721901" target="_blank" rel="noopener noreferrer" class="bg-[#07090e] hover:bg-gray-900/90 p-3 rounded-xl border border-gray-800 hover:border-amber-500/40 flex justify-between items-center transition-all group">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 font-black text-xs">CD</div>
+                                    <div>
+                                        <div class="text-xs font-bold text-gray-200 group-hover:text-amber-300 transition-colors">CoinDCX</div>
+                                        <div class="text-[10px] text-gray-500">Crypto Investing &amp; Trading</div>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                                    Open <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                </span>
+                            </a>
+
+                            <!-- Paytm Money -->
+                            <a href="https://paytmmoney.onelink.me/9L59/yit9xlzd" target="_blank" rel="noopener noreferrer" class="bg-[#07090e] hover:bg-gray-900/90 p-3 rounded-xl border border-gray-800 hover:border-amber-500/40 flex justify-between items-center transition-all group">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-black text-xs">PM</div>
+                                    <div>
+                                        <div class="text-xs font-bold text-gray-200 group-hover:text-amber-300 transition-colors">Paytm Money</div>
+                                        <div class="text-[10px] text-gray-500">Stocks, F&amp;O &amp; Mutual Funds</div>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                                    Open <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                </span>
+                            </a>
+
+                            <!-- INDmoney -->
+                            <div class="bg-[#07090e] p-3 rounded-xl border border-gray-800 hover:border-amber-500/40 flex justify-between items-center transition-all group">
+                                <a href="https://indmoney.onelink.me/RmHC/h1nb9ucp" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 flex-1 min-w-0">
+                                    <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex-none flex items-center justify-center text-emerald-400 font-black text-xs">IM</div>
+                                    <div class="truncate pr-2">
+                                        <div class="text-xs font-bold text-gray-200 group-hover:text-amber-300 transition-colors">INDmoney</div>
+                                        <div class="text-[10px] text-emerald-400 font-semibold">Code: RAM3R9TRIND</div>
+                                    </div>
+                                </a>
+                                <div class="flex items-center gap-1.5 flex-none">
+                                    <button type="button" onclick="copyRefCode('RAM3R9TRIND', this)" title="Copy Code" class="text-[10px] font-bold text-gray-300 bg-gray-800 hover:bg-gray-700 border border-gray-700 px-2 py-1 rounded-lg flex items-center gap-1">
+                                        <i class="fa-regular fa-copy"></i> Copy
+                                    </button>
+                                    <a href="https://indmoney.onelink.me/RmHC/h1nb9ucp" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                                        Open <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- INDstocks -->
+                            <div class="bg-[#07090e] p-3 rounded-xl border border-gray-800 hover:border-amber-500/40 flex justify-between items-center transition-all group">
+                                <a href="https://indstocks.onelink.me/N8Ao/nueee1nv" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 flex-1 min-w-0">
+                                    <div class="w-8 h-8 rounded-lg bg-teal-500/10 border border-teal-500/30 flex-none flex items-center justify-center text-teal-400 font-black text-xs">IS</div>
+                                    <div class="truncate pr-2">
+                                        <div class="text-xs font-bold text-gray-200 group-hover:text-amber-300 transition-colors">INDstocks</div>
+                                        <div class="text-[10px] text-emerald-400 font-semibold">Code: RAM3R9TRIND</div>
+                                    </div>
+                                </a>
+                                <div class="flex items-center gap-1.5 flex-none">
+                                    <button type="button" onclick="copyRefCode('RAM3R9TRIND', this)" title="Copy Code" class="text-[10px] font-bold text-gray-300 bg-gray-800 hover:bg-gray-700 border border-gray-700 px-2 py-1 rounded-lg flex items-center gap-1">
+                                        <i class="fa-regular fa-copy"></i> Copy
+                                    </button>
+                                    <a href="https://indstocks.onelink.me/N8Ao/nueee1nv" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                                        Open <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Zerodha -->
+                            <a href="https://zerodha.com/open-account?c=WAA091" target="_blank" rel="noopener noreferrer" class="bg-[#07090e] hover:bg-gray-900/90 p-3 rounded-xl border border-gray-800 hover:border-amber-500/40 flex justify-between items-center transition-all group">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-black text-xs">ZR</div>
+                                    <div>
+                                        <div class="text-xs font-bold text-gray-200 group-hover:text-amber-300 transition-colors">Zerodha</div>
+                                        <div class="text-[10px] text-gray-500">India's #1 Stock Broker</div>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-lg flex items-center gap-1">
+                                    Open <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 space-y-2">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Data Vault Backups</h4>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="exportCSV()" class="bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-bold py-2.5 px-3 rounded-xl border border-gray-700 flex items-center justify-center gap-1.5 transition-colors">
+                                <i class="fa-solid fa-file-csv text-emerald-400"></i> Export CSV
+                            </button>
+                            <button onclick="clearAllData()" class="bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 text-xs font-bold py-2.5 px-3 rounded-xl border border-rose-800/50 flex items-center justify-center gap-1.5 transition-colors">
+                                <i class="fa-solid fa-trash-can"></i> Reset Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- TRADE ENTRY MODAL -->
+        <div id="tradeModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end justify-center hidden">
+            <div class="w-full max-w-md bg-[#0e1322] border-t border-amber-500/30 rounded-t-3xl p-5 space-y-4 shadow-2xl transform transition-transform">
+                <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+                    <h3 class="text-base font-extrabold gold-gradient-text flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square"></i> Log Execution Entry
+                    </h3>
+                    <button onclick="toggleTradeModal()" class="w-7 h-7 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center hover:text-white">
+                        <i class="fa-solid fa-xmark text-sm"></i>
+                    </button>
+                </div>
+
+                <form id="tradeForm" onsubmit="saveTrade(event)" class="space-y-3">
+                    <div>
+                        <label class="text-[11px] font-bold text-gray-300 block mb-1">Symbol / Contract</label>
+                        <input type="text" id="symbolInput" required placeholder="e.g. NIFTY 24500 CE / BTC" class="w-full bg-[#07090e] border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:border-amber-400 outline-none">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[11px] font-bold text-gray-300 block mb-1">Type</label>
+                            <select id="typeInput" class="w-full bg-[#07090e] border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:border-amber-400 outline-none">
+                                <option value="BUY">BUY / CALL</option>
+                                <option value="SELL">SELL / PUT</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-bold text-gray-300 block mb-1">Quantity</label>
+                            <input type="number" id="qtyInput" required min="1" value="25" class="w-full bg-[#07090e] border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:border-amber-400 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[11px] font-bold text-gray-300 block mb-1">Buy Price</label>
+                            <input type="number" id="buyPriceInput" step="0.05" required placeholder="120.50" class="w-full bg-[#07090e] border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:border-amber-400 outline-none">
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-bold text-gray-300 block mb-1">Sell Price</label>
+                            <input type="number" id="sellPriceInput" step="0.05" required placeholder="145.00" class="w-full bg-[#07090e] border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:border-amber-400 outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-[11px] font-bold text-gray-300 block mb-1">Playbook Setup Strategy</label>
+                        <select id="setupInput" class="w-full bg-[#07090e] border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:border-amber-400 outline-none">
+                            <option value="Breakout">Breakout</option>
+                            <option value="Momentum Scalp">Momentum Scalp</option>
+                            <option value="Pullback / Retest">Pullback / Retest</option>
+                            <option value="VWAP Bounce">VWAP Bounce</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-black font-extrabold text-sm shadow-lg shadow-amber-500/25 active:scale-95 transition-transform mt-2">
+                        SAVE TRADE EXECUTION
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- YOUTUBE CHANNEL DIRECT LINK BANNER -->
+        <a href="https://youtube.com/@mirrise2?si=jcnnaLYw-0HfzNUE" target="_blank" rel="noopener noreferrer" class="mx-4 mb-3 rounded-xl border border-rose-500/40 bg-gradient-to-r from-[#1a0b12] via-[#171c2e] to-[#0c1324] px-3.5 py-2.5 flex items-center justify-between gap-2.5 shadow-lg group active:scale-[0.99] transition-transform">
+            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                <div class="w-8 h-8 rounded-lg bg-rose-600/20 border border-rose-500/50 flex items-center justify-center text-rose-500 flex-none group-hover:scale-105 transition-transform">
+                    <i class="fa-brands fa-youtube text-base"></i>
+                </div>
+                <div class="truncate">
+                    <div class="text-[11px] font-extrabold text-white group-hover:text-amber-300 transition-colors truncate">MirRise Trading – Official YouTube</div>
+                    <div class="text-[9.5px] text-gray-400 truncate">youtube.com/@mirrise2</div>
+                </div>
+            </div>
+            <span class="px-3 py-1 rounded-lg bg-rose-600 group-hover:bg-rose-500 text-white font-extrabold text-[10px] shadow flex items-center gap-1 flex-none">
+                Watch <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+            </span>
+        </a>
+
+        <!-- Sticky Floating Bottom Navigation Bar -->
+        <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-[#0d121f]/95 backdrop-blur-xl border-t border-gray-800/80 px-4 py-2.5 flex items-center justify-between z-40">
+            <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-amber-400 text-[11px] font-medium gap-1 w-14">
+                <i class="fa-solid fa-house-chimney text-base"></i> Home
+            </button>
+            <button onclick="switchTab('chart')" id="nav-chart" class="flex flex-col items-center text-gray-400 text-[11px] font-medium gap-1 w-14">
+                <i class="fa-solid fa-chart-simple text-base"></i> Chart
+            </button>
+            
+            <!-- Center Floating Glowing Button -->
+            <div class="relative -top-5">
+                <button onclick="toggleTradeModal()" class="w-14 h-14 rounded-full floating-mr-btn flex items-center justify-center text-black font-black text-xl tracking-tighter active:scale-90 transition-transform">
+                    MR
+                </button>
+            </div>
+
+            <button onclick="switchTab('analytics')" id="nav-analytics" class="flex flex-col items-center text-gray-400 text-[11px] font-medium gap-1 w-14">
+                <i class="fa-solid fa-book-open text-base"></i> Trade Book
+            </button>
+            <button onclick="switchTab('settings')" id="nav-settings" class="flex flex-col items-center text-gray-400 text-[11px] font-medium gap-1 w-14">
+                <i class="fa-solid fa-gear text-base"></i> Settings
+            </button>
+        </nav>
+
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // State Management
+        let currentCurrency = 'INR';
+        let currencySymbol = '₹';
+        let currentBookPageIndex = 0;
+        let bookDates = [];
+        let pageNotes = JSON.parse(localStorage.getItem('mirrise_book_notes')) || {};
+
+        // Touch & Drag Swipe Gesture Variables
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        // Initial sample dataset
+        let defaultTrades = [
+            { id: 1, symbol: 'NIFTY 24500 CE', type: 'BUY', qty: 50, buyPrice: 120, sellPrice: 165, date: '2026-10-28', setup: 'Breakout' },
+            { id: 2, symbol: 'BANKNIFTY 52000 PE', type: 'BUY', qty: 30, buyPrice: 210, sellPrice: 180, date: '2026-10-29', setup: 'Momentum Scalp' },
+            { id: 3, symbol: 'FINNIFTY 23000 CE', type: 'BUY', qty: 40, buyPrice: 85, sellPrice: 110, date: '2026-10-30', setup: 'Pullback / Retest' },
+            { id: 4, symbol: 'NIFTY 24600 PE', type: 'BUY', qty: 50, buyPrice: 95, sellPrice: 65, date: '2026-10-31', setup: 'VWAP Bounce' },
+            { id: 5, symbol: 'NIFTY 24650 CE', type: 'BUY', qty: 75, buyPrice: 140, sellPrice: 195, date: '2026-11-01', setup: 'Breakout' }
+        ];
+
+        let trades = JSON.parse(localStorage.getItem('mirrise_trades')) || defaultTrades;
+
+        let defaultSetups = ['Breakout', 'Momentum Scalp', 'Pullback / Retest', 'VWAP Bounce'];
+        let playbookSetups = JSON.parse(localStorage.getItem('mirrise_playbook_setups')) || defaultSetups;
+
+        function renderPlaybookSetups() {
+            const listEl = document.getElementById('playbookList');
+            const setupSelect = document.getElementById('setupInput');
+
+            if (listEl) {
+                listEl.innerHTML = '';
+                playbookSetups.forEach((setupName, idx) => {
+                    const row = document.createElement('div');
+                    row.className = "bg-[#07090e] px-3.5 py-3 rounded-xl border border-gray-800 text-xs font-bold text-gray-200 flex items-center justify-between";
+                    row.innerHTML = `
+                        <span>${setupName}</span>
+                        <button type="button" onclick="removePlaybookSetup(${idx})" title="Remove Setup" class="text-gray-500 hover:text-rose-400 text-[11px] px-1.5 py-0.5">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    `;
+                    listEl.appendChild(row);
+                });
+            }
+
+            if (setupSelect) {
+                const currentVal = setupSelect.value;
+                setupSelect.innerHTML = '';
+                playbookSetups.forEach(setupName => {
+                    const opt = document.createElement('option');
+                    opt.value = setupName;
+                    opt.textContent = setupName;
+                    setupSelect.appendChild(opt);
+                });
+                if (playbookSetups.includes(currentVal)) {
+                    setupSelect.value = currentVal;
+                }
+            }
+        }
+
+        function addPlaybookSetup() {
+            const box = document.getElementById('addSetupBox');
+            const input = document.getElementById('newSetupInput');
+            if (!box) return;
+            box.classList.toggle('hidden');
+            if (!box.classList.contains('hidden') && input) {
+                input.focus();
+            }
+        }
+
+        function confirmAddSetup() {
+            const input = document.getElementById('newSetupInput');
+            const box = document.getElementById('addSetupBox');
+            if (!input) return;
+            const val = input.value.trim();
+            if (!val) return;
+            if (!playbookSetups.includes(val)) {
+                playbookSetups.push(val);
+                localStorage.setItem('mirrise_playbook_setups', JSON.stringify(playbookSetups));
+            }
+            input.value = '';
+            if (box) box.classList.add('hidden');
+            renderPlaybookSetups();
+        }
+
+        function removePlaybookSetup(index) {
+            if (playbookSetups.length <= 1) return;
+            playbookSetups.splice(index, 1);
+            localStorage.setItem('mirrise_playbook_setups', JSON.stringify(playbookSetups));
+            renderPlaybookSetups();
+        }
+
+        // On Load Initialization
+        window.onload = function() {
+            drawHeroBull();
+            initShareUrlField();
+            renderPlaybookSetups();
+            renderAll();
+            renderTradeBookPage();
+            initBookSwipeGestures();
+            window.addEventListener('resize', () => {
+                drawHeroBull();
+                renderDailyCandles();
+                renderEquityCurve();
+            });
+        };
+
+        // Populate & Share App Link Helpers
+        function getAppShareUrl() {
+            const url = window.location.href;
+            if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+                return url;
+            }
+            return 'https://mirrise.app/trading-vault';
+        }
+
+        function initShareUrlField() {
+            const input = document.getElementById('appShareUrlInput');
+            if (input) {
+                input.value = getAppShareUrl();
+            }
+        }
+
+        function copyAppLink(btn) {
+            const url = getAppShareUrl();
+            navigator.clipboard.writeText(url).then(() => {
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> Copied';
+                btn.classList.add('border-emerald-500/50', 'text-emerald-300');
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.classList.remove('border-emerald-500/50', 'text-emerald-300');
+                }, 1800);
+            });
+        }
+
+        async function shareAppLink() {
+            const url = getAppShareUrl();
+            const shareData = {
+                title: 'MirRise – Pro Trading Vault',
+                text: 'Check out MirRise – Pro Trading Vault! Track every trade, control risk, and build consistency.',
+                url: url
+            };
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {}
+            } else {
+                navigator.clipboard.writeText(`${shareData.text} ${url}`);
+                alert('App link copied to clipboard!');
+            }
+        }
+
+        function shareToWhatsApp() {
+            const url = getAppShareUrl();
+            const text = encodeURIComponent(`Check out MirRise – Pro Trading Vault! Track every trade, control risk, and build consistency.\n${url}`);
+            window.open(`https://wa.me/?text=${text}`, '_blank', 'noopener,noreferrer');
+        }
+
+        async function shareAppFile() {
+            try {
+                const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+                const file = new File([htmlContent], 'MirRise_Trading_Vault.html', { type: 'text/html' });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        title: 'MirRise – Pro Trading Vault',
+                        text: 'MirRise Offline Trading Journal App',
+                        files: [file]
+                    });
+                } else {
+                    const blob = new Blob([htmlContent], { type: 'text/html' });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'MirRise_Trading_Vault.html';
+                    a.click();
+                    URL.revokeObjectURL(a.href);
+                }
+            } catch (err) {}
+        }
+
+        // Copy Referral Code Helper
+        function copyRefCode(code, btn) {
+            navigator.clipboard.writeText(code).then(() => {
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> Copied';
+                btn.classList.add('border-emerald-500/50', 'text-emerald-300');
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.classList.remove('border-emerald-500/50', 'text-emerald-300');
+                }, 1800);
+            });
+        }
+
+        // Initialize Touch & Mouse Drag Swipe Gestures for Physical Book Flip
+        function initBookSwipeGestures() {
+            const container = document.getElementById('spiralBookContainer');
+            if (!container) return;
+
+            // Mobile Touch Events
+            container.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            container.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleBookSwipe();
+            }, { passive: true });
+
+            // Desktop Mouse Drag Events
+            let isDragging = false;
+            container.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                touchStartX = e.clientX;
+            });
+
+            container.addEventListener('mouseup', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                touchEndX = e.clientX;
+                handleBookSwipe();
+            });
+
+            container.addEventListener('mouseleave', () => {
+                isDragging = false;
+            });
+        }
+
+        // Swipe Gesture Logic (Left = Next Date, Right = Prev Date)
+        function handleBookSwipe() {
+            const diffX = touchEndX - touchStartX;
+            const threshold = 35; // minimum drag distance in px
+
+            if (diffX < -threshold) {
+                // Swiped Left -> Flip to Next Page
+                nextBookPage();
+            } else if (diffX > threshold) {
+                // Swiped Right -> Flip to Previous Page
+                prevBookPage();
+            }
+        }
+
+        // Jump Directly to Selected Date
+        function jumpToBookDate(dateVal) {
+            if (!dateVal) return;
+            const targetIdx = bookDates.indexOf(dateVal);
+            if (targetIdx !== -1) {
+                currentBookPageIndex = targetIdx;
+                renderTradeBookPage();
+            } else {
+                // Display unrecorded date page notice
+                document.getElementById('bookPageDateDisplay').innerText = dateVal;
+                document.getElementById('pbDateVal').innerText = dateVal;
+                const dObj = new Date(dateVal);
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                document.getElementById('pbDayVal').innerText = days[dObj.getDay()] || 'Trading Day';
+
+                document.getElementById('pbTradeRows').innerHTML = `<tr><td colspan="7" class="text-center text-amber-400 py-3 text-xs font-bold">No trades recorded on ${dateVal}.</td></tr>`;
+                document.getElementById('pbBrokerage').innerText = `${currencySymbol}0.00`;
+                document.getElementById('pbClosedPnl').innerText = `${currencySymbol}0.00`;
+                document.getElementById('pbClosedPnl').className = 'text-gray-400 font-bold';
+                document.getElementById('pbNotesInput').value = pageNotes[dateVal] || '';
+            }
+        }
+
+        // Tab Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            // Reset navigation active colors
+            ['home', 'chart', 'analytics', 'settings'].forEach(nav => {
+                const navBtn = document.getElementById(`nav-${nav}`);
+                if (navBtn) {
+                    if (nav === tabId) {
+                        navBtn.className = "flex flex-col items-center text-amber-400 text-[11px] font-medium gap-1 w-14";
+                    } else {
+                        navBtn.className = "flex flex-col items-center text-gray-400 text-[11px] font-medium gap-1 w-14";
+                    }
+                }
+            });
+
+            // Trigger Canvas & Page Renders when switching tabs
+            if (tabId === 'chart') {
+                setTimeout(() => {
+                    renderDailyCandles();
+                    renderEquityCurve();
+                }, 50);
+            }
+            if (tabId === 'analytics') {
+                renderTradeBookPage();
+            }
+        }
+
+        // Render Physical Trade Book Page for Selected Date
+        function renderTradeBookPage() {
+            // Group trades by Date
+            const uniqueDates = [...new Set(trades.map(t => t.date))].sort((a, b) => new Date(b) - new Date(a));
+            bookDates = uniqueDates.length > 0 ? uniqueDates : [new Date().toISOString().split('T')[0]];
+
+            if (currentBookPageIndex >= bookDates.length) currentBookPageIndex = 0;
+            if (currentBookPageIndex < 0) currentBookPageIndex = bookDates.length - 1;
+
+            const selectedDate = bookDates[currentBookPageIndex];
+
+            // Update Date Picker & Display Labels
+            const datePicker = document.getElementById('bookDatePicker');
+            if (datePicker) datePicker.value = selectedDate;
+
+            document.getElementById('bookPageDateDisplay').innerText = selectedDate;
+            document.getElementById('bookPageNumberDisplay').innerText = `Page ${currentBookPageIndex + 1} of ${bookDates.length}`;
+
+            // Add smooth slide animation effect
+            const container = document.getElementById('spiralBookContainer');
+            if (container) {
+                container.classList.add('opacity-70', 'scale-[0.98]');
+                setTimeout(() => {
+                    container.classList.remove('opacity-70', 'scale-[0.98]');
+                }, 150);
+            }
+
+            // Date & Day Calculation
+            const dObj = new Date(selectedDate);
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            document.getElementById('pbDateVal').innerText = selectedDate;
+            document.getElementById('pbDayVal').innerText = days[dObj.getDay()] || 'Trading Day';
+
+            // Filter trades for this specific date page
+            const dayTrades = trades.filter(t => t.date === selectedDate);
+            
+            let dayPnl = 0;
+            let dayTax = 0;
+            const tableBody = document.getElementById('pbTradeRows');
+            tableBody.innerHTML = '';
+
+            if (dayTrades.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="7" class="text-center text-gray-500 py-3 text-xs">No trade logged for this date.</td></tr>`;
+            } else {
+                dayTrades.forEach(t => {
+                    const { net, tax } = getTradePnL(t);
+                    dayPnl += net;
+                    dayTax += tax;
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="font-bold text-white">${t.symbol.slice(0, 10)}</td>
+                        <td>${t.buyPrice}</td>
+                        <td>${t.sellPrice}</td>
+                        <td>${t.qty}</td>
+                        <td class="text-emerald-400">${(t.buyPrice * 1.15).toFixed(1)}</td>
+                        <td class="text-rose-400">${(t.buyPrice * 0.9).toFixed(1)}</td>
+                        <td class="${net >= 0 ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}">${net >= 0 ? '+' : ''}${net.toFixed(0)}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Summary Totals
+            document.getElementById('pbBrokerage').innerText = `${currencySymbol}${dayTax.toFixed(2)}`;
+            const closedPnlEl = document.getElementById('pbClosedPnl');
+            closedPnlEl.innerText = `${dayPnl >= 0 ? '+' : ''}${currencySymbol}${dayPnl.toFixed(2)}`;
+            closedPnlEl.className = dayPnl >= 0 ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold';
+
+            // Notes per date
+            document.getElementById('pbNotesInput').value = pageNotes[selectedDate] || '';
+        }
+
+        function nextBookPage() {
+            if (currentBookPageIndex < bookDates.length - 1) {
+                currentBookPageIndex++;
+                renderTradeBookPage();
+            }
+        }
+
+        function prevBookPage() {
+            if (currentBookPageIndex > 0) {
+                currentBookPageIndex--;
+                renderTradeBookPage();
+            }
+        }
+
+        function saveBookPageNotes() {
+            const selectedDate = bookDates[currentBookPageIndex];
+            const pbNotesInput = document.getElementById('pbNotesInput');
+            if (pbNotesInput && selectedDate) {
+                pageNotes[selectedDate] = pbNotesInput.value;
+                localStorage.setItem('mirrise_book_notes', JSON.stringify(pageNotes));
+            }
+        }
+
+        // Modal Toggle
+        function toggleTradeModal() {
+            const modal = document.getElementById('tradeModal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Save New Trade
+        function saveTrade(e) {
+            e.preventDefault();
+            const symbol = document.getElementById('symbolInput').value.trim();
+            const type = document.getElementById('typeInput').value;
+            const qty = parseFloat(document.getElementById('qtyInput').value);
+            const buyPrice = parseFloat(document.getElementById('buyPriceInput').value);
+            const sellPrice = parseFloat(document.getElementById('sellPriceInput').value);
+            const setup = document.getElementById('setupInput').value;
+
+            const today = new Date().toISOString().split('T')[0];
+
+            const newTrade = {
+                id: Date.now(),
+                symbol,
+                type,
+                qty,
+                buyPrice,
+                sellPrice,
+                date: today,
+                setup
+            };
+
+            trades.unshift(newTrade);
+            localStorage.setItem('mirrise_trades', JSON.stringify(trades));
+            
+            toggleTradeModal();
+            document.getElementById('tradeForm').reset();
+            renderAll();
+        }
+
+        // Delete Single Trade Execution
+        function deleteTrade(id) {
+            trades = trades.filter(t => t.id !== id);
+            localStorage.setItem('mirrise_trades', JSON.stringify(trades));
+            renderAll();
+        }
+
+        // Currency Switcher
+        function updateCurrency(val) {
+            currentCurrency = val;
+            if (val === 'INR') currencySymbol = '₹';
+            else if (val === 'USD') currencySymbol = '$';
+            else if (val === 'EUR') currencySymbol = '€';
+
+            document.getElementById('currencyBadgeBtn').innerText = `${val} (${currencySymbol})`;
+            renderAll();
+        }
+
+        // Calculate Trade Net PnL (Including Brokerage/Tax option)
+        function getTradePnL(t) {
+            const gross = (t.sellPrice - t.buyPrice) * t.qty;
+            const autoTaxCheckbox = document.getElementById('autoTaxCheck');
+            const autoTax = autoTaxCheckbox ? autoTaxCheckbox.checked : true;
+            // Flat tax estimation formula: ₹40 flat + 0.05% turnover tax
+            const turnover = (t.buyPrice + t.sellPrice) * t.qty;
+            const tax = autoTax ? (40 + (turnover * 0.0005)) : 0;
+            return { gross, tax, net: gross - tax };
+        }
+
+        // Render Dashboard Metrics & Feeds
+        function renderAll() {
+            let totalNetPnL = 0;
+            let grossProfit = 0;
+            let grossLoss = 0;
+            let totalTax = 0;
+            let wins = 0;
+            let losses = 0;
+            let peakEquity = 0;
+            let maxDrawdown = 0;
+            let runningEquity = 0;
+
+            const recentList = document.getElementById('recentTradesList');
+            if (recentList) {
+                recentList.innerHTML = '';
+
+                if (trades.length === 0) {
+                    recentList.innerHTML = `
+                        <div class="text-center py-6 text-gray-500 text-xs">
+                            <i class="fa-solid fa-receipt text-2xl text-gray-700 mb-2 block"></i>
+                            No trades recorded yet. Tap <strong class="text-amber-400">MR</strong> to log entry.
+                        </div>`;
+                }
+            }
+
+            // Calculate metrics across all chronological trades
+            const chronological = [...trades].reverse();
+            
+            chronological.forEach(t => {
+                const { gross, tax, net } = getTradePnL(t);
+                totalNetPnL += net;
+                totalTax += tax;
+
+                if (net >= 0) {
+                    grossProfit += net;
+                    wins++;
+                } else {
+                    grossLoss += Math.abs(net);
+                    losses++;
+                }
+
+                // Drawdown tracking
+                runningEquity += net;
+                if (runningEquity > peakEquity) peakEquity = runningEquity;
+                const dd = peakEquity - runningEquity;
+                if (dd > maxDrawdown) maxDrawdown = dd;
+            });
+
+            // Update UI Cards
+            const netPnlVal = document.getElementById('netPnlVal');
+            if (netPnlVal) {
+                netPnlVal.innerText = `${currencySymbol}${totalNetPnL.toFixed(2)}`;
+                netPnlVal.className = `text-2xl font-black ${totalNetPnL >= 0 ? 'text-emerald-400' : 'text-rose-400'} mt-2 tracking-tight`;
+            }
+            
+            const totalTradesVal = document.getElementById('totalTradesVal');
+            if (totalTradesVal) totalTradesVal.innerText = trades.length;
+
+            const winLossRatioVal = document.getElementById('winLossRatioVal');
+            if (winLossRatioVal) winLossRatioVal.innerText = `${wins} Wins / ${losses} Losses`;
+
+            const winRate = trades.length > 0 ? ((wins / trades.length) * 100).toFixed(1) : '0.0';
+            const winRateVal = document.getElementById('winRateVal');
+            if (winRateVal) winRateVal.innerText = `${winRate}%`;
+
+            const maxDdVal = document.getElementById('maxDdVal');
+            if (maxDdVal) maxDdVal.innerText = `${currencySymbol}${maxDrawdown.toFixed(2)}`;
+
+            // Analytics Tab Stats
+            const grossProfitVal = document.getElementById('grossProfitVal');
+            if (grossProfitVal) grossProfitVal.innerText = `${currencySymbol}${grossProfit.toFixed(2)}`;
+
+            const grossLossVal = document.getElementById('grossLossVal');
+            if (grossLossVal) grossLossVal.innerText = `${currencySymbol}${grossLoss.toFixed(2)}`;
+
+            const totalTaxVal = document.getElementById('totalTaxVal');
+            if (totalTaxVal) totalTaxVal.innerText = `${currencySymbol}${totalTax.toFixed(2)}`;
+
+            const profitFactor = grossLoss > 0 ? (grossProfit / grossLoss).toFixed(2) : (grossProfit > 0 ? 'MAX' : '0.00');
+            const profitFactorVal = document.getElementById('profitFactorVal');
+            if (profitFactorVal) profitFactorVal.innerText = profitFactor;
+
+            // Populate Recent Executions List (Top 5)
+            if (recentList) {
+                trades.slice(0, 5).forEach(t => {
+                    const { net } = getTradePnL(t);
+                    const item = document.createElement('div');
+                    item.className = "bg-[#07090e] p-3 rounded-xl border border-gray-800 flex justify-between items-center";
+                    item.innerHTML = `
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-xs text-white">${t.symbol}</span>
+                                <span class="text-[9px] font-extrabold px-1.5 py-0.2 rounded ${t.type === 'BUY' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-rose-950 text-rose-400 border border-rose-800'}">${t.type}</span>
+                            </div>
+                            <div class="text-[10px] text-gray-500 mt-0.5">
+                                Qty: ${t.qty} • Entry: ${t.buyPrice} • Exit: ${t.sellPrice} (${t.setup})
+                            </div>
+                        </div>
+                        <div class="text-right flex items-center gap-3">
+                            <div>
+                                <div class="text-xs font-black ${net >= 0 ? 'text-emerald-400' : 'text-rose-400'}">
+                                    ${net >= 0 ? '+' : ''}${currencySymbol}${net.toFixed(2)}
+                                </div>
+                                <div class="text-[9px] text-gray-500">${t.date}</div>
+                            </div>
+                            <button onclick="deleteTrade(${t.id})" class="text-gray-600 hover:text-rose-400 transition-colors p-1">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </div>
+                    `;
+                    recentList.appendChild(item);
+                });
+            }
+
+            // Render Active Canvas Visualizations & Trade Book Page
+            renderTradeBookPage();
+            renderDailyCandles();
+            renderEquityCurve();
+        }
+
+        // Draw Canvas Hero Graphic (Golden Candle Chart & Glowing Particles)
+        function drawHeroBull() {
+            const canvas = document.getElementById('heroBullCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            // Soft golden ambient glow on right side
+            const glowGrad = ctx.createRadialGradient(w * 0.72, h * 0.52, 8, w * 0.72, h * 0.52, w * 0.55);
+            glowGrad.addColorStop(0, 'rgba(255, 196, 45, 0.22)');
+            glowGrad.addColorStop(0.55, 'rgba(217, 119, 6, 0.08)');
+            glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = glowGrad;
+            ctx.fillRect(0, 0, w, h);
+
+            // Golden candlesticks rising across the banner
+            const startX = w * 0.36;
+            const spanX = w * 0.60;
+            const count = 20;
+            const step = spanX / count;
+            const cWidth = Math.max(4, Math.min(8, step * 0.46));
+
+            let price = h * 0.76;
+            const trendPts = [];
+
+            for (let i = 0; i < count; i++) {
+                const progress = i / (count - 1);
+                const x = startX + i * step + step * 0.5;
+                const wave = Math.sin(i * 0.85) * 9;
+                const delta = (progress * -h * 0.44) + wave;
+                const openY = price;
+                const closeY = Math.max(h * 0.16, Math.min(h * 0.84, h * 0.76 + delta));
+                const highY = Math.min(openY, closeY) - (6 + ((i * 7) % 14));
+                const lowY = Math.max(openY, closeY) + (5 + ((i * 5) % 10));
+
+                const isUp = closeY <= openY;
+                const strokeCol = isUp ? 'rgba(255, 224, 120, 0.88)' : 'rgba(217, 119, 6, 0.72)';
+                const bodyGrad = ctx.createLinearGradient(0, highY, 0, lowY);
+                if (isUp) {
+                    bodyGrad.addColorStop(0, 'rgba(255, 243, 176, 0.95)');
+                    bodyGrad.addColorStop(0.5, 'rgba(255, 196, 36, 0.85)');
+                    bodyGrad.addColorStop(1, 'rgba(180, 83, 9, 0.65)');
+                } else {
+                    bodyGrad.addColorStop(0, 'rgba(245, 158, 11, 0.75)');
+                    bodyGrad.addColorStop(1, 'rgba(120, 53, 15, 0.55)');
+                }
+
+                // Wick
+                ctx.strokeStyle = strokeCol;
+                ctx.lineWidth = 1.1;
+                ctx.beginPath();
+                ctx.moveTo(x, highY);
+                ctx.lineTo(x, lowY);
+                ctx.stroke();
+
+                // Candle body
+                const top = Math.min(openY, closeY);
+                const bodyH = Math.max(3, Math.abs(closeY - openY));
+                ctx.fillStyle = bodyGrad;
+                ctx.fillRect(x - cWidth / 2, top, cWidth, bodyH);
+
+                trendPts.push({ x, y: (openY + closeY) / 2 });
+                price = closeY;
+            }
+
+            // Sweeping golden trend ribbons
+            [0, 10, 18].forEach((offset, idx) => {
+                ctx.beginPath();
+                trendPts.forEach((pt, i) => {
+                    const ty = pt.y + offset + Math.sin(i * 0.55 + idx) * 5;
+                    if (i === 0) ctx.moveTo(pt.x, ty);
+                    else ctx.lineTo(pt.x, ty);
+                });
+                ctx.strokeStyle = idx === 0
+                    ? 'rgba(255, 232, 133, 0.85)'
+                    : idx === 1
+                    ? 'rgba(251, 191, 36, 0.55)'
+                    : 'rgba(245, 158, 11, 0.35)';
+                ctx.lineWidth = idx === 0 ? 1.8 : 1.1;
+                ctx.stroke();
+            });
+
+            // Glowing golden stardust particles along the curve
+            for (let p = 0; p < 55; p++) {
+                const t = p / 54;
+                const px = startX + t * spanX + Math.sin(p * 3.1) * 10;
+                const py = h * 0.84 - t * h * 0.45 + Math.cos(p * 2.3) * 18;
+                const r = (p % 4 === 0) ? 2.1 : (p % 2 === 0 ? 1.3 : 0.8);
+                ctx.fillStyle = p % 3 === 0
+                    ? 'rgba(255, 245, 190, 0.9)'
+                    : 'rgba(255, 193, 25, 0.72)';
+                ctx.beginPath();
+                ctx.arc(px, py, r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Left dark fade so text stays super readable
+            const leftFade = ctx.createLinearGradient(0, 0, w * 0.68, 0);
+            leftFade.addColorStop(0, 'rgba(5, 9, 20, 0.86)');
+            leftFade.addColorStop(0.75, 'rgba(5, 9, 20, 0.45)');
+            leftFade.addColorStop(1, 'rgba(5, 9, 20, 0)');
+            ctx.fillStyle = leftFade;
+            ctx.fillRect(0, 0, w * 0.68, h);
+        }
+
+        // Canvas Rendering: Daily P&L Candlestick Chart (Real Financial Market OHLC)
+        function renderDailyCandles() {
+            const canvas = document.getElementById('dailyCandleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (trades.length === 0) {
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '12px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText('No trade data available for daily candles', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            // 1. Group trades chronologically by Date
+            const tradesByDate = {};
+            const sortedTrades = [...trades].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            sortedTrades.forEach(t => {
+                const { net } = getTradePnL(t);
+                if (!tradesByDate[t.date]) {
+                    tradesByDate[t.date] = [];
+                }
+                tradesByDate[t.date].push(net);
+            });
+
+            const dates = Object.keys(tradesByDate);
+            
+            // 2. Compute Real OHLC (Open, High, Low, Close) values
+            let currentOpen = 0;
+            const ohlcData = [];
+
+            dates.forEach(date => {
+                const dayTrades = tradesByDate[date];
+                const open = currentOpen;
+                let running = open;
+                let high = open;
+                let low = open;
+
+                dayTrades.forEach(pnl => {
+                    running += pnl;
+                    if (running > high) high = running;
+                    if (running < low) low = running;
+                });
+
+                const netDayPnL = running - open;
+                if (high === Math.max(open, running)) high += Math.abs(netDayPnL) * 0.15 + 10;
+                if (low === Math.min(open, running)) low -= Math.abs(netDayPnL) * 0.15 + 10;
+
+                const close = running;
+                ohlcData.push({ date, open, high, low, close });
+                currentOpen = close;
+            });
+
+            // 3. Setup Chart Scales
+            let minVal = Math.min(...ohlcData.map(d => d.low));
+            let maxVal = Math.max(...ohlcData.map(d => d.high));
+            
+            const spread = maxVal - minVal || 100;
+            minVal -= spread * 0.1;
+            maxVal += spread * 0.1;
+
+            const paddingLeftRight = 35;
+            const paddingTopBottom = 25;
+            const availableWidth = canvas.width - (paddingLeftRight * 2);
+            const availableHeight = canvas.height - (paddingTopBottom * 2);
+
+            const candleSpacing = availableWidth / (ohlcData.length || 1);
+            const candleWidth = Math.min(20, candleSpacing * 0.55);
+
+            const getY = (val) => {
+                return canvas.height - paddingTopBottom - ((val - minVal) / (maxVal - minVal)) * availableHeight;
+            };
+
+            // 4. Draw Background Grid Lines
+            ctx.strokeStyle = '#151c2e';
+            ctx.lineWidth = 1;
+            for (let gridIdx = 0; gridIdx <= 4; gridIdx++) {
+                const gridY = paddingTopBottom + (availableHeight / 4) * gridIdx;
+                ctx.beginPath();
+                ctx.moveTo(0, gridY);
+                ctx.lineTo(canvas.width, gridY);
+                ctx.stroke();
+            }
+
+            // 5. Draw Real Market Candlesticks & Wicks
+            ohlcData.forEach((d, i) => {
+                const x = paddingLeftRight + (i * candleSpacing) + (candleSpacing / 2);
+                
+                const openY = getY(d.open);
+                const closeY = getY(d.close);
+                const highY = getY(d.high);
+                const lowY = getY(d.low);
+
+                const isBullish = d.close >= d.open;
+                const color = isBullish ? '#10b981' : '#f43f5e';
+
+                // High-Low Wick Line
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 1.8;
+                ctx.beginPath();
+                ctx.moveTo(x, highY);
+                ctx.lineTo(x, lowY);
+                ctx.stroke();
+
+                // Candle Body (Open to Close)
+                ctx.fillStyle = color;
+                const bodyTop = Math.min(openY, closeY);
+                const bodyHeight = Math.max(Math.abs(closeY - openY), 3);
+                
+                ctx.fillRect(x - (candleWidth / 2), bodyTop, candleWidth, bodyHeight);
+
+                // Date Label
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '9px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText(d.date.slice(5), x, canvas.height - 6);
+            });
+        }
+
+        // Canvas Rendering: Cumulative Equity Curve
+        function renderEquityCurve() {
+            const canvas = document.getElementById('equityCurveCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (trades.length === 0) {
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '12px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText('No trades logged yet', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            let cumulative = 0;
+            const points = [0];
+            [...trades].reverse().forEach(t => {
+                const { net } = getTradePnL(t);
+                cumulative += net;
+                points.push(cumulative);
+            });
+
+            const maxP = Math.max(...points, 100);
+            const minP = Math.min(...points, -100);
+            const range = maxP - minP || 1;
+
+            const padding = 15;
+            const stepX = (canvas.width - padding * 2) / (points.length - 1);
+
+            // Draw line
+            ctx.beginPath();
+            points.forEach((p, i) => {
+                const x = padding + i * stepX;
+                const y = canvas.height - padding - ((p - minP) / range) * (canvas.height - padding * 2);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+
+            // Gradient fill below line
+            ctx.lineTo(canvas.width - padding, canvas.height);
+            ctx.lineTo(padding, canvas.height);
+            const fillGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            fillGrad.addColorStop(0, 'rgba(245, 158, 11, 0.25)');
+            fillGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = fillGrad;
+            ctx.fill();
+        }
+
+        // CSV Export Utility
+        function exportCSV() {
+            if (trades.length === 0) {
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,ID,Symbol,Type,Quantity,BuyPrice,SellPrice,Date,Setup,NetPnL\n";
+            trades.forEach(t => {
+                const { net } = getTradePnL(t);
+                csvContent += `${t.id},"${t.symbol}",${t.type},${t.qty},${t.buyPrice},${t.sellPrice},${t.date},"${t.setup}",${net.toFixed(2)}\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `MirRise_Trade_Vault_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Reset Data Utility
+        function clearAllData() {
+            trades = [];
+            localStorage.removeItem('mirrise_trades');
+            renderAll();
+        }
+    </script>
+</body>
+</html>
